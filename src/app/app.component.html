@@ -1,0 +1,59 @@
+<div class="calc-wrapper">
+
+  <!-- CALCULADORA -->
+  <div class="calculator">
+    <div class="display">
+      <span class="expression">{{ expression || '&nbsp;' }}</span>
+      <span class="display-value">{{ display }}</span>
+    </div>
+    <div class="buttons">
+      <!-- Row 1 -->
+      <button class="btn btn-function" (click)="onClear()">C</button>
+      <button class="btn btn-function" (click)="onToggleSign()">+/-</button>
+      <button class="btn btn-function" (click)="onPercent()">%</button>
+      <button class="btn btn-operator" [class.active-op]="operator === '/'" (click)="onOperator('/')">÷</button>
+      <!-- Row 2 -->
+      <button class="btn btn-number" (click)="onNumber('7')">7</button>
+      <button class="btn btn-number" (click)="onNumber('8')">8</button>
+      <button class="btn btn-number" (click)="onNumber('9')">9</button>
+      <button class="btn btn-operator" [class.active-op]="operator === '*'" (click)="onOperator('*')">×</button>
+      <!-- Row 3 -->
+      <button class="btn btn-number" (click)="onNumber('4')">4</button>
+      <button class="btn btn-number" (click)="onNumber('5')">5</button>
+      <button class="btn btn-number" (click)="onNumber('6')">6</button>
+      <button class="btn btn-operator" [class.active-op]="operator === '-'" (click)="onOperator('-')">−</button>
+      <!-- Row 4 -->
+      <button class="btn btn-number" (click)="onNumber('1')">1</button>
+      <button class="btn btn-number" (click)="onNumber('2')">2</button>
+      <button class="btn btn-number" (click)="onNumber('3')">3</button>
+      <button class="btn btn-operator" [class.active-op]="operator === '+'" (click)="onOperator('+')">+</button>
+      <!-- Row 5 -->
+      <button class="btn btn-number btn-zero" (click)="onNumber('0')">0</button>
+      <button class="btn btn-number" (click)="onDecimal()">.</button>
+      <button class="btn btn-equals" (click)="onEquals()">=</button>
+    </div>
+  </div>
+
+  <!-- HISTORIAL -->
+  <div class="history-panel">
+    <div class="history-header">
+      <span>Historial</span>
+      <button class="clear-history" (click)="onClearHistory()" [disabled]="history.length === 0">Limpiar</button>
+    </div>
+    <div class="history-list">
+      <div *ngIf="history.length === 0" class="history-empty">
+        Sin operaciones aún
+      </div>
+      <div
+        *ngFor="let entry of history"
+        class="history-entry"
+        (click)="onLoadFromHistory(entry)"
+        title="Cargar resultado en la calculadora"
+      >
+        <span class="entry-label">{{ entry.label }}</span>
+        <span class="entry-use">Usar →</span>
+      </div>
+    </div>
+  </div>
+
+</div>
