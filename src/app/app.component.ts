@@ -18,6 +18,11 @@ export class AppComponent {
   expression = '';
   operator: string | null = null;
   history: HistoryEntry[] = [];
+  historyVisible = true;
+
+  onToggleHistory(): void {
+    this.historyVisible = !this.historyVisible;
+  }
 
   private firstOperand: number | null = null;
   private waitingForSecond = false;
@@ -48,10 +53,11 @@ export class AppComponent {
       const result = this.calculate(this.firstOperand, current, this.operator!);
       this.display = this.formatResult(result);
       this.firstOperand = result;
+      this.expression = `${this.expression} ${this.formatResult(current)} ${this.opSymbol(op)}`;
     } else {
       this.firstOperand = current;
+      this.expression = `${this.formatResult(current)} ${this.opSymbol(op)}`;
     }
-    this.expression = `${this.formatResult(this.firstOperand!)} ${this.opSymbol(op)}`;
     this.operator = op;
     this.waitingForSecond = true;
   }
@@ -68,7 +74,7 @@ export class AppComponent {
     this.display = resultStr;
     this.firstOperand = null;
     this.operator = null;
-    this.waitingForSecond = false;
+    this.waitingForSecond = true;
   }
 
   onClear(): void {
@@ -83,9 +89,13 @@ export class AppComponent {
     this.history = [];
   }
 
+  onDeleteHistoryEntry(index: number): void {
+    this.history.splice(index, 1);
+  }
+
   onLoadFromHistory(entry: HistoryEntry): void {
     this.display = this.formatResult(entry.result);
-    this.expression = `Recall: ${this.formatResult(entry.result)}`;
+    this.expression = `Recuperado: ${this.formatResult(entry.result)}`;
     this.firstOperand = null;
     this.operator = null;
     this.waitingForSecond = false;

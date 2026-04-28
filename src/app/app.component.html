@@ -2,40 +2,54 @@
 
   <!-- CALCULADORA -->
   <div class="calculator">
+
+    <!-- Barra superior -->
+    <div class="calc-topbar">
+      <button class="history-toggle-btn" (click)="onToggleHistory()" [class.active]="historyVisible">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+        </svg>
+        Historial
+      </button>
+    </div>
+
+    <!-- Pantalla: muestra la expresión y el resultado -->
     <div class="display">
       <span class="expression">{{ expression || '&nbsp;' }}</span>
       <span class="display-value">{{ display }}</span>
     </div>
+
+    <!-- Teclado numérico y de operadores -->
     <div class="buttons">
-      <!-- Row 1 -->
+      <!-- Fila 1: limpiar, cambio de signo, porcentaje, división -->
       <button class="btn btn-function" (click)="onClear()">C</button>
       <button class="btn btn-function" (click)="onToggleSign()">+/-</button>
       <button class="btn btn-function" (click)="onPercent()">%</button>
       <button class="btn btn-operator" [class.active-op]="operator === '/'" (click)="onOperator('/')">÷</button>
-      <!-- Row 2 -->
+      <!-- Fila 2 -->
       <button class="btn btn-number" (click)="onNumber('7')">7</button>
       <button class="btn btn-number" (click)="onNumber('8')">8</button>
       <button class="btn btn-number" (click)="onNumber('9')">9</button>
       <button class="btn btn-operator" [class.active-op]="operator === '*'" (click)="onOperator('*')">×</button>
-      <!-- Row 3 -->
+      <!-- Fila 3 -->
       <button class="btn btn-number" (click)="onNumber('4')">4</button>
       <button class="btn btn-number" (click)="onNumber('5')">5</button>
       <button class="btn btn-number" (click)="onNumber('6')">6</button>
       <button class="btn btn-operator" [class.active-op]="operator === '-'" (click)="onOperator('-')">−</button>
-      <!-- Row 4 -->
+      <!-- Fila 4 -->
       <button class="btn btn-number" (click)="onNumber('1')">1</button>
       <button class="btn btn-number" (click)="onNumber('2')">2</button>
       <button class="btn btn-number" (click)="onNumber('3')">3</button>
       <button class="btn btn-operator" [class.active-op]="operator === '+'" (click)="onOperator('+')">+</button>
-      <!-- Row 5 -->
+      <!-- Fila 5 -->
       <button class="btn btn-number btn-zero" (click)="onNumber('0')">0</button>
       <button class="btn btn-number" (click)="onDecimal()">.</button>
       <button class="btn btn-equals" (click)="onEquals()">=</button>
     </div>
   </div>
 
-  <!-- HISTORIAL -->
-  <div class="history-panel">
+  <!-- ─── HISTORIAL (panel lateral derecho) ─── -->
+  <div class="history-panel" [class.open]="historyVisible">
     <div class="history-header">
       <span>Historial</span>
       <button class="clear-history" (click)="onClearHistory()" [disabled]="history.length === 0">Limpiar</button>
@@ -44,14 +58,12 @@
       <div *ngIf="history.length === 0" class="history-empty">
         Sin operaciones aún
       </div>
-      <div
-        *ngFor="let entry of history"
-        class="history-entry"
-        (click)="onLoadFromHistory(entry)"
-        title="Cargar resultado en la calculadora"
-      >
+      <div *ngFor="let entry of history; let i = index" class="history-entry">
         <span class="entry-label">{{ entry.label }}</span>
-        <span class="entry-use">Usar →</span>
+        <div class="entry-actions">
+          <button class="entry-use" (click)="onLoadFromHistory(entry)" title="Usar resultado">Usar</button>
+          <button class="entry-delete" (click)="onDeleteHistoryEntry(i)" title="Eliminar">✕</button>
+        </div>
       </div>
     </div>
   </div>
