@@ -18,7 +18,7 @@ export class AppComponent {
   expression = '';
   operator: string | null = null;
   history: HistoryEntry[] = [];
-  historyVisible = true;
+  historyVisible = false;
 
   onToggleHistory(): void {
     this.historyVisible = !this.historyVisible;
