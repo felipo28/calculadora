@@ -9,9 +9,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 24px;
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
   padding: 24px;
+}
+
+/* ─── CONTENEDOR CALCULADORA + HISTORIAL ─── */
+.calc-container {
+  display: flex;
+  align-items: center;
+  gap: 24px;
 }
 
 /* ─── CALCULADORA ─── */
@@ -54,6 +60,28 @@
   &.active {
     background: rgba(255, 159, 10, 0.15);
     color: #ff9f0a;
+  }
+}
+
+.history-close-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: #2a2a2c;
+  border: none;
+  color: #aaa;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s;
+
+  svg { flex-shrink: 0; }
+
+  &:hover {
+    background: #3a3a3c;
+    color: #fff;
   }
 }
 
@@ -179,6 +207,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
   padding-bottom: 10px;
   border-bottom: 1px solid #333;
   margin-bottom: 10px;
@@ -187,6 +216,7 @@
     color: #fff;
     font-size: 1rem;
     font-weight: 600;
+    flex: 1;
   }
 
   .clear-history {
@@ -316,6 +346,139 @@
       background: #ff453a;
       color: #fff;
     }
+  }
+}
+
+/* ─── RESPONSIVE ─── */
+
+// Tablet: hasta 900px (historia al lado pero más angosta)
+@media (max-width: 900px) {
+  .history-panel {
+    &.open {
+      width: 260px;
+    }
+  }
+}
+
+// Tablet portrait / móvil: hasta 768px → historial como overlay del mismo tamaño que la calculadora
+@media (max-width: 768px) {
+  .calc-wrapper {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px 16px;
+    min-height: 100svh;
+  }
+
+  .calc-container {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .calculator {
+    width: 100%;
+  }
+
+  // Overlay: mismo tamaño exacto que la calculadora
+  .history-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: auto;
+    z-index: 10;
+    border-radius: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.96) translateY(10px);
+    transition: opacity 0.28s ease,
+                transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &.open {
+      width: auto;
+      opacity: 1;
+      pointer-events: auto;
+      padding: 16px;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  .history-close-btn {
+    display: flex;
+  }
+}
+
+// Móvil pequeño: hasta 480px
+@media (max-width: 480px) {
+  .calculator {
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .buttons {
+    gap: 8px;
+  }
+
+  .btn {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    font-size: 1.2rem;
+    border-radius: 50%;
+  }
+
+  .btn-zero {
+    aspect-ratio: auto;
+    height: auto;
+    min-height: 0;
+    padding: 0 0 0 22px;
+    // Hereda la misma altura de celda que las otras al ser 1fr
+    align-self: stretch;
+  }
+
+  .btn-operator,
+  .btn-equals {
+    font-size: 1.45rem;
+  }
+
+  .display {
+    min-height: 88px;
+    padding: 12px 14px;
+
+    .display-value {
+      font-size: 2.3rem;
+    }
+  }
+
+  .history-panel {
+    border-radius: 16px;
+  }
+}
+
+// Móvil muy pequeño: hasta 360px
+@media (max-width: 360px) {
+  .calc-wrapper {
+    padding: 12px 10px;
+  }
+
+  .calculator {
+    padding: 12px;
+  }
+
+  .buttons {
+    gap: 6px;
+  }
+
+  .btn-operator,
+  .btn-equals {
+    font-size: 1.3rem;
+  }
+
+  .display .display-value {
+    font-size: 2rem;
   }
 }
 
