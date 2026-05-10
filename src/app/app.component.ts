@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 interface HistoryEntry {
@@ -109,6 +109,33 @@ export class AppComponent {
   onPercent(): void {
     const val = parseFloat(this.display);
     this.display = this.formatResult(val / 100);
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  onKeydown(event: KeyboardEvent): void {
+    const key = event.key;
+    if ('0123456789'.includes(key)) {
+      this.onNumber(key);
+    } else if (key === '.') {
+      this.onDecimal();
+    } else if (key === '+') {
+      this.onOperator('+');
+    } else if (key === '-') {
+      this.onOperator('-');
+    } else if (key === '*') {
+      this.onOperator('*');
+    } else if (key === '/') {
+      event.preventDefault();
+      this.onOperator('/');
+    } else if (key === 'Enter' || key === '=') {
+      this.onEquals();
+    } else if (key === 'Backspace') {
+      this.onBackspace();
+    } else if (key === 'Escape') {
+      this.onClear();
+    } else if (key === '%') {
+      this.onPercent();
+    }
   }
 
   onBackspace(): void {
