@@ -1,3 +1,4 @@
+
 # Calculadora
 
 > Proyecto personal de aprendizaje — Angular 17 + TypeScript + SCSS
@@ -10,7 +11,7 @@
 
 ## Vista previa
 
-<img width="960" height="668" alt="Vista previa de la calculadora" src="https://github.com/user-attachments/assets/62b56993-00c7-43cd-b57e-401ea2607524" />
+<img width="852" height="695" alt="Captura de pantalla 2026-05-10 a la(s) 2 04 42 p m" src="https://github.com/user-attachments/assets/930bc388-977b-434a-95ad-95aad7d9c583" />
 
 ---
 
